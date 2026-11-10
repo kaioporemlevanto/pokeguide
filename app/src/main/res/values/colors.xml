@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- Cores Principais do App -->
+    <color name="poke_pink">#FFCDD2</color> <!-- Usado na barra superior, botão e fundo do texto -->
+    <color name="poke_red">#F44336</color> <!-- Usado no coração de favoritos preenchido -->
+
+    <!-- Cores das barras de Status (Tela de Detalhes) -->
+    <color name="stat_ps">#FF5252</color>       <!-- Vermelho (PS) -->
+    <color name="stat_ataque">#FF9800</color>   <!-- Laranja (Ataque) -->
+    <color name="stat_defesa">#FFEB3B</color>   <!-- Amarelo (Defesa) -->
+    <color name="stat_atq_es">#448AFF</color>   <!-- Azul (Atq. Es.) -->
+    <color name="stat_def_es">#4CAF50</color>   <!-- Verde (Def. Es.) -->
+    <color name="stat_velocidade">#FF80AB</color> <!-- Rosa (Velocidade) -->
+</resources>

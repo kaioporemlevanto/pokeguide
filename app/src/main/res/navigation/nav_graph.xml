@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/splashFragment">
+
+    <!-- Splash Screen -->
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.example.pokeguide.ui.splash.SplashFragment"
+        android:label="SplashFragment">
+        <action
+            android:id="@+id/action_splashFragment_to_searchFragment"
+            app:destination="@id/searchFragment"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true"/>
+    </fragment>
+
+    <!-- Tela de Busca -->
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.example.pokeguide.ui.search.SearchFragment"
+        android:label="SearchFragment">
+        <action
+            android:id="@+id/action_searchFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_pokemonListFragment"
+            app:destination="@id/pokemonListFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_favoritesFragment"
+            app:destination="@id/favoritesFragment" />
+    </fragment>
+
+    <!-- Tela da Lista em Grid -->
+    <fragment
+        android:id="@+id/pokemonListFragment"
+        android:name="com.example.pokeguide.ui.list.PokemonListFragment"
+        android:label="PokemonListFragment">
+        <action
+            android:id="@+id/action_pokemonListFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+        <action
+            android:id="@+id/action_pokemonListFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_pokemonListFragment_to_favoritesFragment"
+            app:destination="@id/favoritesFragment" />
+    </fragment>
+
+    <!-- Tela de Favoritos -->
+    <fragment
+        android:id="@+id/favoritesFragment"
+        android:name="com.example.pokeguide.ui.favorites.FavoritesFragment"
+        android:label="FavoritesFragment">
+        <action
+            android:id="@+id/action_favoritesFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+        <action
+            android:id="@+id/action_favoritesFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_favoritesFragment_to_pokemonListFragment"
+            app:destination="@id/pokemonListFragment" />
+    </fragment>
+
+    <!-- Tela de Detalhes -->
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.example.pokeguide.ui.detail.DetailFragment"
+        android:label="DetailFragment">
+        <argument
+            android:name="pokemonName"
+            app:argType="string" />
+    </fragment>
+
+</navigation>

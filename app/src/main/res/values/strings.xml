@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">PokeGuide</string>
+
+    <!-- Tela de Busca -->
+    <string name="hint_nome_pokemon">Nome do pokemon</string>
+    <string name="btn_buscar">Buscar</string>
+    <string name="top_bar_symbols">◇   |   ○   |   □</string>
+
+    <!-- Tela de Favoritos e Lista Geral -->
+    <string name="titulo_favoritos">Meus favoritos</string>
+    <string name="titulo_lista">Lista de pokemons</string>
+
+    <!-- Tela de Detalhes -->
+    <string name="btn_retornar">Retornar</string>
+    <string name="label_ps">PS:</string>
+    <string name="label_ataque">Ataque:</string>
+    <string name="label_defesa">Defesa:</string>
+    <string name="label_atq_es">Atq. Es.:</string>
+    <string name="label_def_es">Def. Es.:</string>
+    <string name="label_velocidade">Velocidade:</string>
+
+    <!-- Textos do Kotlin (Toasts) -->
+    <string name="erro_campo_vazio">Digite o nome do Pokémon</string>
+    <string name="msg_buscando">Buscando: %1$s</string>
+</resources>
