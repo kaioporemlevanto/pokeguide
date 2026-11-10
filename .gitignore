@@ -13,3 +13,20 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+# Gradle & Build
+.gradle/
+build/
+app/build/
+
+# IDE e arquivos locais
+.idea/
+*.iml
+.DS_Store
+local.properties
+
+# Cache de navegação e compilação interna
+.navigation/
+captures/
+.externalNativeBuild/
+.cxx/
