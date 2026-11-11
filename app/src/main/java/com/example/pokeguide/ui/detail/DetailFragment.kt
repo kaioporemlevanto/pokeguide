@@ -35,64 +35,70 @@ class DetailFragment : Fragment() {
 
         favoritesManager = FavoritesManager(requireContext())
 
-        // Resgata o nome do Pokémon passado pela tela de busca ou lista
-        val pokemonName = arguments?.getString("pokemonName") ?: ""
-
-        if (pokemonName.isNotEmpty()) {
-            viewModel.loadPokemonDetails(pokemonName)
-        }
-
-        // Botão Retornar com fallback de segurança
+        // Ação do Botão Retornar (Garante o retorno via pilha ou fallback de navegação)
         binding.tvBack.setOnClickListener {
             if (!findNavController().popBackStack()) {
                 findNavController().navigateUp()
             }
         }
 
-        // Observa os dados da API
+        // Resgata o nome do Pokémon
+        val pokemonName = arguments?.getString("pokemonName") ?: ""
+        if (pokemonName.isNotEmpty()) {
+            viewModel.loadPokemonDetails(pokemonName)
+        }
+
+        // Observa os detalhes do Pokémon
         viewModel.pokemonDetail.observe(viewLifecycleOwner) { pokemon ->
             if (pokemon != null) {
-                // Nome e Imagem Oficial via Coil
                 binding.tvPokemonNameDetail.text = pokemon.name.replaceFirstChar { it.uppercase() }
-                binding.ivPokemonDetail.load(pokemon.imageUrl) {
-                    crossfade(true)
-                }
+                binding.ivPokemonDetail.load(pokemon.imageUrl) { crossfade(true) }
 
-                // Preenche e dimensiona as barras de status de forma proporcional
+                // Renderiza as tags dos Tipos (Fogo, Voador, etc.)
+                renderTypes(pokemon.types)
+
+                // Preenche os 6 Status
                 pokemon.stats.forEach { statResponse ->
-                    val statValue = statResponse.base_stat
+                    val value = statResponse.base_stat
                     when (statResponse.stat.name) {
                         "hp" -> {
-                            binding.tvHpValue.text = statValue.toString()
-                            updateStatBar(binding.viewHpBar, statValue)
+                            binding.tvHpValue.text = value.toString()
+                            updateStatBar(binding.viewHpBar, value)
                         }
                         "attack" -> {
-                            binding.tvAttackValue.text = statValue.toString()
-                            updateStatBar(binding.viewAttackBar, statValue)
+                            binding.tvAttackValue.text = value.toString()
+                            updateStatBar(binding.viewAttackBar, value)
                         }
                         "defense" -> {
-                            binding.tvDefenseValue.text = statValue.toString()
-                            updateStatBar(binding.viewDefenseBar, statValue)
+                            binding.tvDefenseValue.text = value.toString()
+                            updateStatBar(binding.viewDefenseBar, value)
+                        }
+                        "special-attack" -> {
+                            binding.tvSpAtkValue.text = value.toString()
+                            updateStatBar(binding.viewSpAtkBar, value)
+                        }
+                        "special-defense" -> {
+                            binding.tvSpDefValue.text = value.toString()
+                            updateStatBar(binding.viewSpDefBar, value)
                         }
                         "speed" -> {
-                            binding.tvSpeedValue.text = statValue.toString()
-                            updateStatBar(binding.viewSpeedBar, statValue)
+                            binding.tvSpeedValue.text = value.toString()
+                            updateStatBar(binding.viewSpeedBar, value)
                         }
                     }
                 }
 
-                // Configura o estado do ícone de favorito
+                // Gerenciamento de Favoritos
                 var isFavorite = favoritesManager.isFavorite(pokemon.name)
                 updateFavoriteIcon(isFavorite)
 
-                // Clique no ícone para Favoritar / Desfavoritar
                 binding.ivFavorite.setOnClickListener {
                     if (isFavorite) {
                         favoritesManager.removeFavorite(pokemon.name)
                         isFavorite = false
                         Toast.makeText(requireContext(), "${pokemon.name.uppercase()} removido dos favoritos", Toast.LENGTH_SHORT).show()
                     } else {
-                        val pokemonResult = PokemonResult(
+                        val pokemonResult = com.example.pokeguide.data.model.PokemonResult(
                             name = pokemon.name,
                             url = "https://pokeapi.co/api/v2/pokemon/${pokemon.id}/"
                         )
@@ -126,6 +132,81 @@ class DetailFragment : Fragment() {
         // Define o weight diretamente como o valor do status vindo da PokéAPI (ex: 35 para HP, 90 para Velocidade)
         params.weight = statValue.toFloat().coerceIn(1f, 200f)
         view.layoutParams = params
+    }
+
+    private fun renderTypes(typeSlots: List<com.example.pokeguide.data.model.PokemonTypeSlot>) {
+        binding.containerTypes.removeAllViews()
+
+        typeSlots.forEach { slot ->
+            val typeName = slot.type.name
+            val textView = android.widget.TextView(requireContext()).apply {
+                text = translateType(typeName)
+                setTextColor(android.graphics.Color.WHITE)
+                textSize = 12f
+                setTypeface(null, android.graphics.Typeface.BOLD)
+                setPadding(24, 8, 24, 8)
+                background = createTypeTagBackground(getTypeColor(typeName))
+
+                val params = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                ).apply {
+                    setMargins(8, 0, 8, 0)
+                }
+                layoutParams = params
+            }
+            binding.containerTypes.addView(textView)
+        }
+    }
+
+    private fun translateType(type: String): String = when (type.lowercase()) {
+        "fire" -> "Fogo"
+        "water" -> "Água"
+        "grass" -> "Planta"
+        "electric" -> "Elétrico"
+        "flying" -> "Voador"
+        "poison" -> "Venenoso"
+        "ground" -> "Terrestre"
+        "rock" -> "Pedra"
+        "bug" -> "Inseto"
+        "ghost" -> "Fantasma"
+        "steel" -> "Aço"
+        "dragon" -> "Dragão"
+        "dark" -> "Sombrio"
+        "fairy" -> "Fada"
+        "psychic" -> "Psíquico"
+        "ice" -> "Gelo"
+        "fighting" -> "Lutador"
+        else -> type.replaceFirstChar { it.uppercase() }
+    }
+
+    private fun getTypeColor(type: String): Int = when (type.lowercase()) {
+        "fire" -> android.graphics.Color.parseColor("#F08030")
+        "water" -> android.graphics.Color.parseColor("#6890F0")
+        "grass" -> android.graphics.Color.parseColor("#78C850")
+        "electric" -> android.graphics.Color.parseColor("#F8D030")
+        "flying" -> android.graphics.Color.parseColor("#A890F0")
+        "poison" -> android.graphics.Color.parseColor("#A040A0")
+        "ground" -> android.graphics.Color.parseColor("#E0C068")
+        "rock" -> android.graphics.Color.parseColor("#B8A038")
+        "bug" -> android.graphics.Color.parseColor("#A8B820")
+        "ghost" -> android.graphics.Color.parseColor("#705898")
+        "steel" -> android.graphics.Color.parseColor("#B8B8D0")
+        "dragon" -> android.graphics.Color.parseColor("#7038F8")
+        "dark" -> android.graphics.Color.parseColor("#705848")
+        "fairy" -> android.graphics.Color.parseColor("#EE99AC")
+        "psychic" -> android.graphics.Color.parseColor("#F85888")
+        "ice" -> android.graphics.Color.parseColor("#98D8D8")
+        "fighting" -> android.graphics.Color.parseColor("#C03028")
+        else -> android.graphics.Color.GRAY
+    }
+
+    private fun createTypeTagBackground(color: Int): android.graphics.drawable.GradientDrawable {
+        return android.graphics.drawable.GradientDrawable().apply {
+            shape = android.graphics.drawable.GradientDrawable.RECTANGLE
+            cornerRadius = 12f
+            setColor(color)
+        }
     }
 
     override fun onDestroyView() {

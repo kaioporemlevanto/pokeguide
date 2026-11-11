@@ -56,6 +56,7 @@ class SearchFragment : Fragment() {
                     putString("pokemonName", pokemon.name)
                 }
                 findNavController().navigate(R.id.action_searchFragment_to_detailFragment, bundle)
+                viewModel.clearSearchResult()
             }
         }
 

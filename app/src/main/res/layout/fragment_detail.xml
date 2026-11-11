@@ -7,234 +7,120 @@
     android:background="@color/white"
     android:padding="16dp">
 
-    <!-- Botão Retornar -->
-    <!-- Botão Retornar -->
+    <!-- Topo: Voltar e Favorito -->
     <TextView
         android:id="@+id/tvBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/btn_retornar"
+        android:text="Retornar"
         android:textSize="18sp"
-        android:textColor="@color/black"
         android:textStyle="bold"
+        android:textColor="@color/black"
         android:padding="8dp"
-        android:clickable="true"
-        android:focusable="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Ícone de Favorito (Coração) -->
     <ImageView
         android:id="@+id/ivFavorite"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
         android:src="@android:drawable/btn_star_big_off"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Imagem Oficial do Pokémon -->
+    <!-- Imagem e Nome do Pokémon -->
     <ImageView
         android:id="@+id/ivPokemonDetail"
-        android:layout_width="160dp"
-        android:layout_height="160dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvBack" />
 
-    <!-- Nome do Pokémon -->
-    <TextView
-        android:id="@+id/tvPokemonNameDetail"
+    <!-- Tags dos Tipos (Fogo, Voador, etc) -->
+    <LinearLayout
+        android:id="@+id/containerTypes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:textColor="@color/black"
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivPokemonDetail" />
 
-    <!-- Container dos Status com Trilho de Fundo -->
+    <TextView
+        android:id="@+id/tvPokemonNameDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/containerTypes" />
+
+    <!-- Lista com os 6 Status (PS, Ataque, Defesa, Atq. Es., Def. Es., Velocidade) -->
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvPokemonNameDetail">
 
-        <!-- PS / HP -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginBottom="8dp">
-
-            <TextView
-                android:layout_width="90dp"
-                android:layout_height="wrap_content"
-                android:text="@string/label_ps"
-                android:textStyle="bold"
-                android:textColor="@color/black"/>
-
-            <!-- Valor do Status -->
-            <TextView
-                android:id="@+id/tvHpValue"
-                android:layout_width="35dp"
-                android:layout_height="wrap_content"
-                android:text="0"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:textColor="@color/black"
-                android:gravity="end"
-                android:layout_marginEnd="8dp"/>
-
-            <!-- Trilho Cinza -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="16dp"
-                android:layout_weight="1"
-                android:background="#E0E0E0"
-                android:weightSum="200"
-                android:orientation="horizontal">
-
-                <View
-                    android:id="@+id/viewHpBar"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@color/stat_ps"/>
+        <!-- PS -->
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:layout_marginBottom="6dp">
+            <TextView android:layout_width="70dp" android:layout_height="wrap_content" android:text="PS:" android:textStyle="bold" android:textColor="@color/black"/>
+            <TextView android:id="@+id/tvHpValue" android:layout_width="35dp" android:layout_height="wrap_content" android:text="0" android:textStyle="bold" android:textColor="@color/black" android:gravity="end" android:layout_marginEnd="8dp"/>
+            <LinearLayout android:layout_width="0dp" android:layout_height="16dp" android:layout_weight="1" android:background="#E0E0E0" android:weightSum="200" android:orientation="horizontal">
+                <View android:id="@+id/viewHpBar" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:background="#FF5350"/>
             </LinearLayout>
         </LinearLayout>
 
         <!-- Ataque -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginBottom="8dp">
-
-            <TextView
-                android:layout_width="90dp"
-                android:layout_height="wrap_content"
-                android:text="@string/label_ataque"
-                android:textStyle="bold"
-                android:textColor="@color/black"/>
-
-            <TextView
-                android:id="@+id/tvAttackValue"
-                android:layout_width="35dp"
-                android:layout_height="wrap_content"
-                android:text="0"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:textColor="@color/black"
-                android:gravity="end"
-                android:layout_marginEnd="8dp"/>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="16dp"
-                android:layout_weight="1"
-                android:background="#E0E0E0"
-                android:weightSum="200"
-                android:orientation="horizontal">
-
-                <View
-                    android:id="@+id/viewAttackBar"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@color/stat_ataque"/>
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:layout_marginBottom="6dp">
+            <TextView android:layout_width="70dp" android:layout_height="wrap_content" android:text="Ataque:" android:textStyle="bold" android:textColor="@color/black"/>
+            <TextView android:id="@+id/tvAttackValue" android:layout_width="35dp" android:layout_height="wrap_content" android:text="0" android:textStyle="bold" android:textColor="@color/black" android:gravity="end" android:layout_marginEnd="8dp"/>
+            <LinearLayout android:layout_width="0dp" android:layout_height="16dp" android:layout_weight="1" android:background="#E0E0E0" android:weightSum="200" android:orientation="horizontal">
+                <View android:id="@+id/viewAttackBar" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:background="#FF7F27"/>
             </LinearLayout>
         </LinearLayout>
 
         <!-- Defesa -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginBottom="8dp">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:layout_marginBottom="6dp">
+            <TextView android:layout_width="70dp" android:layout_height="wrap_content" android:text="Defesa:" android:textStyle="bold" android:textColor="@color/black"/>
+            <TextView android:id="@+id/tvDefenseValue" android:layout_width="35dp" android:layout_height="wrap_content" android:text="0" android:textStyle="bold" android:textColor="@color/black" android:gravity="end" android:layout_marginEnd="8dp"/>
+            <LinearLayout android:layout_width="0dp" android:layout_height="16dp" android:layout_weight="1" android:background="#E0E0E0" android:weightSum="200" android:orientation="horizontal">
+                <View android:id="@+id/viewDefenseBar" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:background="#FFC90E"/>
+            </LinearLayout>
+        </LinearLayout>
 
-            <TextView
-                android:layout_width="90dp"
-                android:layout_height="wrap_content"
-                android:text="@string/label_defesa"
-                android:textStyle="bold"
-                android:textColor="@color/black"/>
+        <!-- Ataque Especial -->
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:layout_marginBottom="6dp">
+            <TextView android:layout_width="70dp" android:layout_height="wrap_content" android:text="Atq. Es.:" android:textStyle="bold" android:textColor="@color/black"/>
+            <TextView android:id="@+id/tvSpAtkValue" android:layout_width="35dp" android:layout_height="wrap_content" android:text="0" android:textStyle="bold" android:textColor="@color/black" android:gravity="end" android:layout_marginEnd="8dp"/>
+            <LinearLayout android:layout_width="0dp" android:layout_height="16dp" android:layout_weight="1" android:background="#E0E0E0" android:weightSum="200" android:orientation="horizontal">
+                <View android:id="@+id/viewSpAtkBar" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:background="#6890F0"/>
+            </LinearLayout>
+        </LinearLayout>
 
-            <TextView
-                android:id="@+id/tvDefenseValue"
-                android:layout_width="35dp"
-                android:layout_height="wrap_content"
-                android:text="0"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:textColor="@color/black"
-                android:gravity="end"
-                android:layout_marginEnd="8dp"/>
-
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="16dp"
-                android:layout_weight="1"
-                android:background="#E0E0E0"
-                android:weightSum="200"
-                android:orientation="horizontal">
-
-                <View
-                    android:id="@+id/viewDefenseBar"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@color/stat_defesa"/>
+        <!-- Defesa Especial -->
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:layout_marginBottom="6dp">
+            <TextView android:layout_width="70dp" android:layout_height="wrap_content" android:text="Def. Es.:" android:textStyle="bold" android:textColor="@color/black"/>
+            <TextView android:id="@+id/tvSpDefValue" android:layout_width="35dp" android:layout_height="wrap_content" android:text="0" android:textStyle="bold" android:textColor="@color/black" android:gravity="end" android:layout_marginEnd="8dp"/>
+            <LinearLayout android:layout_width="0dp" android:layout_height="16dp" android:layout_weight="1" android:background="#E0E0E0" android:weightSum="200" android:orientation="horizontal">
+                <View android:id="@+id/viewSpDefBar" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:background="#78C850"/>
             </LinearLayout>
         </LinearLayout>
 
         <!-- Velocidade -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
-
-            <TextView
-                android:layout_width="90dp"
-                android:layout_height="wrap_content"
-                android:text="@string/label_velocidade"
-                android:textStyle="bold"
-                android:textColor="@color/black"/>
-
-            <TextView
-                android:id="@+id/tvSpeedValue"
-                android:layout_width="35dp"
-                android:layout_height="wrap_content"
-                android:text="0"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:textColor="@color/black"
-                android:gravity="end"
-                android:layout_marginEnd="8dp"/>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="16dp"
-                android:layout_weight="1"
-                android:background="#E0E0E0"
-                android:weightSum="200"
-                android:orientation="horizontal">
-
-                <View
-                    android:id="@+id/viewSpeedBar"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@color/stat_velocidade"/>
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical">
+            <TextView android:layout_width="70dp" android:layout_height="wrap_content" android:text="Velocidade:" android:textSize="12sp" android:textStyle="bold" android:textColor="@color/black"/>
+            <TextView android:id="@+id/tvSpeedValue" android:layout_width="35dp" android:layout_height="wrap_content" android:text="0" android:textStyle="bold" android:textColor="@color/black" android:gravity="end" android:layout_marginEnd="8dp"/>
+            <LinearLayout android:layout_width="0dp" android:layout_height="16dp" android:layout_weight="1" android:background="#E0E0E0" android:weightSum="200" android:orientation="horizontal">
+                <View android:id="@+id/viewSpeedBar" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:background="#F85888"/>
             </LinearLayout>
         </LinearLayout>
 

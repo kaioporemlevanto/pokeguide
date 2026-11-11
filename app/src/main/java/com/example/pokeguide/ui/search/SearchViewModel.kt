@@ -20,6 +20,9 @@ class SearchViewModel : ViewModel() {
     private val _errorMessage = MutableLiveData<String?>()
     val errorMessage: LiveData<String?> get() = _errorMessage
 
+    fun clearSearchResult(){
+        _pokemonResult.value = null
+    }
     fun searchPokemon(name: String) {
         viewModelScope.launch {
             try {

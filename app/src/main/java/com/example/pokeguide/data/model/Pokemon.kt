@@ -1,31 +1,46 @@
 package com.example.pokeguide.data.model
 
+import com.google.gson.annotations.SerializedName
+
 data class Pokemon(
     val id: Int,
     val name: String,
-    val height: Int,
-    val weight: Int,
     val stats: List<StatResponse>,
-    val types: List<TypeResponse>
+    val types: List<PokemonTypeSlot>, // Adicionado para capturar os tipos
+    val sprites: Sprites
 ) {
     val imageUrl: String
-        get() = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/$id.png"
+        get() = sprites.other?.officialArtwork?.front_default
+            ?: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$id.png"
 }
+
+data class PokemonTypeSlot(
+    val slot: Int,
+    val type: PokemonTypeInfo
+)
+
+data class PokemonTypeInfo(
+    val name: String
+)
 
 data class StatResponse(
     val base_stat: Int,
-    val stat: StatDetail
+    val stat: StatInfo
 )
 
-data class StatDetail(
-    val name: String // Ex: "hp", "attack", "defense", "special-attack", "special-defense", "speed"
+data class StatInfo(
+    val name: String
 )
 
-data class TypeResponse(
-    val slot: Int,
-    val type: TypeDetail
+data class Sprites(
+    val other: OtherSprites?
 )
 
-data class TypeDetail(
-    val name: String // Ex: "fire", "flying", "grass"
+data class OtherSprites(
+    @SerializedName("official-artwork")
+    val officialArtwork: OfficialArtwork?
+)
+
+data class OfficialArtwork(
+    val front_default: String?
 )
