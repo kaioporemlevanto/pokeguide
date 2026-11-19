@@ -1,4 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-  
+    <item
+        android:id="@+id/searchFragment"
+        android:icon="@android:drawable/ic_menu_search"
+        android:title="Buscar" />
+
+    <item
+        android:id="@+id/pokemonListFragment"
+        android:icon="@android:drawable/ic_dialog_dialer"
+        android:title="Pokédex" />
+
+    <item
+        android:id="@+id/favoritesFragment"
+        android:icon="@android:drawable/btn_star_big_on"
+        android:title="Favoritos" />
 </menu>

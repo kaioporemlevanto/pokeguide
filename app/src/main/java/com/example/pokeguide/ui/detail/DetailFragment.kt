@@ -10,9 +10,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import coil.load
-import com.example.pokeguide.data.local.FavoritesManager
 import com.example.pokeguide.data.model.PokemonResult
+import com.example.pokeguide.data.repository.FavoritesRepository
 import com.example.pokeguide.databinding.FragmentDetailBinding
+import com.google.android.material.snackbar.Snackbar
 
 class DetailFragment : Fragment() {
 
@@ -20,7 +21,7 @@ class DetailFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: DetailViewModel by viewModels()
-    private lateinit var favoritesManager: FavoritesManager
+    private val favoritesRepository = FavoritesRepository()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,8 +33,6 @@ class DetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        favoritesManager = FavoritesManager(requireContext())
 
         // Ação do Botão Retornar (Garante o retorno via pilha ou fallback de navegação)
         binding.tvBack.setOnClickListener {
@@ -51,13 +50,12 @@ class DetailFragment : Fragment() {
         // Observa os detalhes do Pokémon
         viewModel.pokemonDetail.observe(viewLifecycleOwner) { pokemon ->
             if (pokemon != null) {
+                // Nome, Imagem e Tags de Tipo
                 binding.tvPokemonNameDetail.text = pokemon.name.replaceFirstChar { it.uppercase() }
                 binding.ivPokemonDetail.load(pokemon.imageUrl) { crossfade(true) }
-
-                // Renderiza as tags dos Tipos (Fogo, Voador, etc.)
                 renderTypes(pokemon.types)
 
-                // Preenche os 6 Status
+                // Preenche os 6 Status e suas barras proporcionais
                 pokemon.stats.forEach { statResponse ->
                     val value = statResponse.base_stat
                     when (statResponse.stat.name) {
@@ -88,25 +86,49 @@ class DetailFragment : Fragment() {
                     }
                 }
 
-                // Gerenciamento de Favoritos
-                var isFavorite = favoritesManager.isFavorite(pokemon.name)
-                updateFavoriteIcon(isFavorite)
+                // Sincroniza estado de favorito no Firestore
+                var isFavorite = false
 
-                binding.ivFavorite.setOnClickListener {
-                    if (isFavorite) {
-                        favoritesManager.removeFavorite(pokemon.name)
-                        isFavorite = false
-                        Toast.makeText(requireContext(), "${pokemon.name.uppercase()} removido dos favoritos", Toast.LENGTH_SHORT).show()
-                    } else {
-                        val pokemonResult = com.example.pokeguide.data.model.PokemonResult(
-                            name = pokemon.name,
-                            url = "https://pokeapi.co/api/v2/pokemon/${pokemon.id}/"
-                        )
-                        favoritesManager.saveFavorite(pokemonResult)
-                        isFavorite = true
-                        Toast.makeText(requireContext(), "${pokemon.name.uppercase()} adicionado aos favoritos!", Toast.LENGTH_SHORT).show()
+                favoritesRepository.isFavorite(pokemon.name) { exists ->
+                    if (_binding != null) {
+                        isFavorite = exists
+                        updateFavoriteIcon(isFavorite)
                     }
-                    updateFavoriteIcon(isFavorite)
+                }
+
+                // Favoritar / Desfavoritar com Snackbar e opção "Desfazer"
+                binding.ivFavorite.setOnClickListener {
+                    val pokemonResult = PokemonResult(
+                        name = pokemon.name,
+                        url = "https://pokeapi.co/api/v2/pokemon/${pokemon.id}/"
+                    )
+                    val formattedName = pokemon.name.replaceFirstChar { it.uppercase() }
+
+                    if (isFavorite) {
+                        favoritesRepository.removeFavorite(pokemon.name)
+                        isFavorite = false
+                        updateFavoriteIcon(false)
+
+                        Snackbar.make(binding.root, "$formattedName removido dos favoritos", Snackbar.LENGTH_LONG)
+                            .setAction("Desfazer") {
+                                favoritesRepository.saveFavorite(pokemonResult)
+                                isFavorite = true
+                                updateFavoriteIcon(true)
+                            }
+                            .show()
+                    } else {
+                        favoritesRepository.saveFavorite(pokemonResult)
+                        isFavorite = true
+                        updateFavoriteIcon(true)
+
+                        Snackbar.make(binding.root, "$formattedName adicionado aos favoritos", Snackbar.LENGTH_LONG)
+                            .setAction("Desfazer") {
+                                favoritesRepository.removeFavorite(pokemon.name)
+                                isFavorite = false
+                                updateFavoriteIcon(false)
+                            }
+                            .show()
+                    }
                 }
             }
         }
@@ -126,10 +148,8 @@ class DetailFragment : Fragment() {
         }
     }
 
-    // Função auxiliar para ajustar a largura da barra proporcionalmente ao valor do status
     private fun updateStatBar(view: View, statValue: Int) {
         val params = view.layoutParams as LinearLayout.LayoutParams
-        // Define o weight diretamente como o valor do status vindo da PokéAPI (ex: 35 para HP, 90 para Velocidade)
         params.weight = statValue.toFloat().coerceIn(1f, 200f)
         view.layoutParams = params
     }

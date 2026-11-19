@@ -5,78 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
-    <!-- Barra superior rosada -->
-    <View
-        android:id="@+id/topBar"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:background="@color/poke_pink"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Formas geométricas provisórias -->
-    <!-- Container dos símbolos clicáveis na barra rosada -->
-    <LinearLayout
-    android:id="@+id/navBarSymbols"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:gravity="center_vertical"
-    app:layout_constraintBottom_toBottomOf="@+id/topBar"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="@+id/topBar">
-
-    <TextView
-        android:id="@+id/btnNavSearch"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:text="◇"
-        android:textSize="28sp"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:paddingVertical="8dp"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="|"
-        android:textSize="22sp"
-        android:textColor="@color/black"/>
-
-    <TextView
-        android:id="@+id/btnNavList"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:text="○"
-        android:textSize="28sp"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:paddingVertical="8dp"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="|"
-        android:textSize="22sp"
-        android:textColor="@color/black"/>
-
-    <TextView
-        android:id="@+id/btnNavFavorites"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:text="□"
-        android:textSize="28sp"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:paddingVertical="8dp"/>
-
-</LinearLayout>
 
     <!-- Imagem central -->
     <ImageView

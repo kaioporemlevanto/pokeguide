@@ -5,8 +5,8 @@ data class PokemonResponse(
 )
 
 data class PokemonResult(
-    val name: String,
-    val url: String
+    val name: String = "",
+    val url: String = ""
 ) {
     // Extrai o número (ID) do final da string da URL: "https://pokeapi.co/api/v2/pokemon/25/" -> 25
     val id: Int
