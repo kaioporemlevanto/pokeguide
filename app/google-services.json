@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "786217237097",
+    "project_id": "pokeguidedb",
+    "storage_bucket": "pokeguidedb.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:786217237097:android:c82a14c78c5df99f1a40f8",
+        "android_client_info": {
+          "package_name": "com.example.pokeguide"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDaw3CM_xV0kiOlJRvu3nhEI4UZHCEYR3I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
