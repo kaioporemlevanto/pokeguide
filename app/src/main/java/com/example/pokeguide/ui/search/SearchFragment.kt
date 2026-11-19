@@ -30,14 +30,6 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Navegação pelos ícones da barra superior
-        binding.btnNavList.setOnClickListener {
-            findNavController().navigate(R.id.action_searchFragment_to_pokemonListFragment)
-        }
-        binding.btnNavFavorites.setOnClickListener {
-            findNavController().navigate(R.id.action_searchFragment_to_favoritesFragment)
-        }
-
         // Ação do botão de busca
         binding.btnSearch.setOnClickListener {
             val pokemonName = binding.etPokemonName.text.toString().trim().lowercase()

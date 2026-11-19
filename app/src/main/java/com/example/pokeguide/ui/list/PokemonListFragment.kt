@@ -31,14 +31,6 @@ class PokemonListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Navegação pelos ícones da barra superior
-        binding.btnNavSearch.setOnClickListener {
-            findNavController().navigate(R.id.action_pokemonListFragment_to_searchFragment)
-        }
-        binding.btnNavFavorites.setOnClickListener {
-            findNavController().navigate(R.id.action_pokemonListFragment_to_favoritesFragment)
-        }
-
         setupRecyclerView()
 
         viewModel.pokemonList.observe(viewLifecycleOwner) { list ->
@@ -55,7 +47,7 @@ class PokemonListFragment : Fragment() {
             findNavController().navigate(R.id.action_pokemonListFragment_to_detailFragment, bundle)
         }
 
-        // Configura um GridLayoutManager com 3 colunas (conforme o protótipo)
+        // Configura um GridLayoutManager com 3 colunas
         val gridLayoutManager = GridLayoutManager(requireContext(), 3)
         binding.rvPokemonList.layoutManager = gridLayoutManager
         binding.rvPokemonList.adapter = pokemonAdapter

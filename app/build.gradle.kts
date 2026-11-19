@@ -1,11 +1,6 @@
-
 plugins {
-    //alias(libs.plugins.android.application)
-    id("com.android.built-in-kotlin")
-    id("com.android.application")
-    id("com.google.gms.google-services")
-    alias(libs.plugins.legacy.kapt)
-    //alias(libs.plugins.google.gms.google.services)
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.google.gms.google.services)
 }
 
 android {
@@ -46,6 +41,12 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+
+    packaging {
+        jniLibs {
+            keepDebugSymbols += "**/libdatastore_shared_counter.so"
+        }
+    }
 }
 
 dependencies {
@@ -72,12 +73,6 @@ dependencies {
     // Retrofit e Gson
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-
-    // Room Database
-    val room_version = "2.7.2"
-    implementation("androidx.room:room-runtime:$room_version")
-    implementation("androidx.room:room-ktx:$room_version")
-    kapt("androidx.room:room-compiler:$room_version")
 
     // ViewModel e LiveData
     val lifecycle_version = "2.7.0"
